@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principles of Games MCQ Quiz</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #ffffff;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .quiz-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  h1, h2 {
+    color: #0056b3;
+    text-align: center;
+  }
+  .question-box {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 20px;
+  }
+  .option {
+    background: #e6f0ff;
+    border: 1px solid #0056b3;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .option:hover {
+    background: #d0e4ff;
+  }
+  .option.correct {
+    background-color: #b5f5b5;
+    border-color: #28a745;
+  }
+  .option.incorrect {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+  }
+  button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  button:hover {
+    background-color: #003f88;
+  }
+  .feedback {
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .progress {
+    height: 10px;
+    background-color: #d0e4ff;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .progress-bar {
+    height: 10px;
+    background-color: #0056b3;
+    width: 0%;
+    transition: width 0.4s;
+  }
+  .result-box {
+    text-align: center;
+    background: #f0f8ff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+</style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Principles of Games MCQ Quiz</h1>
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+    <div id="quiz"></div>
+    <div id="result" style="display:none;"></div>
+  </div>
+
+<script>
+const questions = [
+  // --- Net/Wall (Barrier) Games ---
+  {q:"In net-barrier games, what is the main objective when setting up an attack?",a:["Send the object into open space away from opponent","Hit the object hard every time","Keep the object close to the net","Focus only on defending"],correct:0,exp:"Creating open space forces opponents out of position."},
+  {q:"In badminton, sending a shuttle deep to the backcourt helps to:",a:["Force opponent away from base position","Reduce rally length","Save energy","Maintain same rally speed"],correct:0,exp:"Deep shots make opponent move back, opening front court."},
+  {q:"In volleyball, the setter’s main offensive role is to:",a:["Set up an attack for a hitter","Defend against spikes","Serve consistently","Block the opponent"],correct:0,exp:"Setting up hitters initiates attack opportunities."},
+  {q:"Which factor improves timing for shots in net games?",a:["Reading opponent’s body cues","Standing still","Avoiding movement","Closing eyes briefly"],correct:0,exp:"Anticipation from visual cues improves timing."},
+  {q:"When defending in net-barrier games, players should position:",a:["Near the center base","Only at the front","Only at the back","Randomly"],correct:0,exp:"Center base allows quicker reach to all areas."},
+  {q:"Which is an effective tactic to win a rally?",a:["Varying shot depth and angles","Repeating same shot","Playing without spin","Ignoring opponent’s position"],correct:0,exp:"Variation keeps opponents guessing and off balance."},
+  {q:"‘Shot selection’ means choosing:",a:["The most effective shot for the situation","The most powerful shot","Only forehand shots","Random shots"],correct:0,exp:"Good shot selection applies tactical thinking."},
+  {q:"In tennis doubles, communication helps to:",a:["Avoid confusion during play","Distract opponents","Reduce focus","Slow down reactions"],correct:0,exp:"Clear communication ensures coordinated teamwork."},
+  {q:"In table tennis, adding topspin makes the ball:",a:["Dip faster into opponent’s court","Travel slower","Float unpredictably","Bounce lower"],correct:0,exp:"Topspin creates downward force for controlled landing."},
+  {q:"A defensive clear in badminton is used to:",a:["Buy time and reset position","Force opponent forward","End the rally","Serve"],correct:0,exp:"High deep clears allow recovery time."},
+  {q:"In volleyball, moving quickly to receive is an example of:",a:["Reaction time","Force production","Energy conservation","Random play"],correct:0,exp:"Quick reactions prevent missed passes."},
+  {q:"In pickleball, placing shots diagonally helps to:",a:["Move opponents out of position","Reduce rally time","Win instantly","Avoid net play"],correct:0,exp:"Diagonal placement stretches defense."},
+  {q:"When the object is received at the side of backcourt, an effective response is:",a:["Send diagonally toward middle frontcourt","Send back to same spot","Let it drop","Aim directly at opponent"],correct:0,exp:"Diagonal return opens attacking options."},
+  {q:"Footwork in net games primarily supports:",a:["Balance and positioning","Power hitting","Spin control","Serving only"],correct:0,exp:"Good footwork enables effective positioning."},
+  {q:"Maintaining ready stance between shots improves:",a:["Reaction to opponent’s return","Endurance","Power","Serve accuracy"],correct:0,exp:"Ready stance enhances anticipation and movement."},
+
+  // --- Invasion Games ---
+  {q:"In invasion games, 'maintaining possession' means:",a:["Keeping control of the ball within team","Attacking goal quickly","Tackling opponents","Passing to defenders"],correct:0,exp:"Maintaining possession delays turnovers."},
+  {q:"‘Using space to invade’ involves:",a:["Moving into open areas to attack","Standing still","Passing backwards only","Marking defenders"],correct:0,exp:"Players exploit open space to advance play."},
+  {q:"‘Creating space to invade’ mainly involves:",a:["Off-ball movement","Holding the ball","Shooting only","Standing near goal"],correct:0,exp:"Players move off-ball to draw defenders away."},
+  {q:"A forward pass in invasion games has higher offensive value because:",a:["It moves play toward goal","It is safer","It wastes time","It resets defense"],correct:0,exp:"Forward passes support progression to score."},
+  {q:"Which option best supports a teammate under pressure?",a:["Move to an open passing lane","Stand behind defender","Call for pass without moving","Stay still"],correct:0,exp:"Support play opens passing options."},
+  {q:"When attacking goal, key tactical principle is:",a:["Create numerical advantage","Avoid passing","Stay stationary","Dribble randomly"],correct:0,exp:"Overloads improve scoring opportunities."},
+  {q:"Dodging a defender effectively helps to:",a:["Create space to invade","Defend goal","Pass backward","Rest during play"],correct:0,exp:"Dodging frees players for receiving or shooting."},
+  {q:"In basketball, a give-and-go demonstrates:",a:["Using and creating space","Random passing","Defensive tactic","Resting play"],correct:0,exp:"It creates space then uses it for penetration."},
+  {q:"When maintaining possession, direction of attack:",a:["Is not required","Must always be forward","Should be backward","Should be toward sideline"],correct:0,exp:"Maintaining possession can be any safe pass."},
+  {q:"‘Pressing’ is a defensive tactic to:",a:["Regain possession quickly","Avoid opponents","Play individually","Delay game"],correct:0,exp:"Pressing applies pressure to recover ball."},
+  {q:"When using space to invade, players often:",a:["Exploit gaps between defenders","Stay in one spot","Wait for whistle","Ignore teammates"],correct:0,exp:"Moving into gaps progresses attack."},
+  {q:"A key difference between creating and using space is:",a:["Off-ball vs on-ball action","Same concept","Only defensive","Only dribbling"],correct:0,exp:"Creating space = off-ball; using space = on-ball."},
+  {q:"Which skill supports attacking goal effectively?",a:["Timing and decision-making","Random shooting","Ignoring defenders","Constant dribbling"],correct:0,exp:"Timing determines success of offensive plays."},
+  {q:"A defender intruding into attacker’s personal space forces:",a:["Attacker to move beyond defender","No change","Automatic turnover","Rest play"],correct:0,exp:"It triggers the need to create space to invade."},
+  {q:"Passing to an off-ball attacker demonstrates:",a:["Team coordination","Defensive tactic","Solo play","Delaying attack"],correct:0,exp:"It promotes teamwork and progression."},
+
+  // --- Striking/Fielding Games ---
+  {q:"In striking-fielding games, fielders should:",a:["Cover open spaces and bases","Run randomly","Stay in one spot","Focus only on batting"],correct:0,exp:"Good field coverage prevents runs."},
+  {q:"A 'force-out' occurs when:",a:["Runner must advance and base is tagged first","Runner is tagged while stationary","Ball hits runner","Runner misses base"],correct:0,exp:"Force-outs happen when base is reached before runner."},
+  {q:"Best place to strike the ball to minimize force-out risk:",a:["Away from crowded fielders","Straight to pitcher","Directly backward","To the nearest fielder"],correct:0,exp:"Hitting into open areas allows safe base running."},
+  {q:"When designing 3-base modified game, key defensive learning outcome is:",a:["Throw to base runner is approaching","Hit longer","Ignore base positions","Focus on scoring"],correct:0,exp:"Fielders target base runner is heading to."},
+  {q:"Reducing playing area in modified games encourages:",a:["Faster decision making","Longer rallies","Less engagement","More rest"],correct:0,exp:"Smaller area demands quicker reactions."},
+  {q:"Representation principle means:",a:["Simplifying real game context","Changing sport entirely","Ignoring rules","Adding difficulty"],correct:0,exp:"Represents essence of game at simplified level."},
+  {q:"Exaggeration principle is used to:",a:["Highlight a tactical focus","Make game random","Remove structure","Ignore objectives"],correct:0,exp:"Exaggeration amplifies learning focus."},
+  {q:"Sampling helps learners to:",a:["Transfer skills across related games","Play unrelated games","Ignore technique","Focus only on winning"],correct:0,exp:"It connects tactical similarities between games."},
+  {q:"In cricket, positioning near boundary supports:",a:["Catching deep shots","Short passes","Defending net","Serving"],correct:0,exp:"Boundary fielders stop long hits."},
+  {q:"A good batting strategy involves:",a:["Selecting gaps between fielders","Hitting straight at defenders","Avoiding swings","Standing still"],correct:0,exp:"Smart placement maximizes scoring chances."},
+
+  // --- Pedagogical Principles ---
+  {q:"Sampling principle in teaching games means:",a:["Using related games to teach transferable concepts","Focusing only on one sport","Avoiding variety","Ignoring progression"],correct:0,exp:"Learners apply skills from one game to another."},
+  {q:"Representation in game design aims to:",a:["Simplify complexity while keeping core ideas","Change all rules","Remove objectives","Focus only on winning"],correct:0,exp:"Represents essential tactical structure."},
+  {q:"Exaggeration principle modifies rules to:",a:["Emphasize a key tactical problem","Make game easier only","Add confusion","Eliminate goals"],correct:0,exp:"It highlights learning focus (e.g. quicker passing)."},
+  {q:"‘Modification by representation’ focuses on:",a:["Retaining original game structure","Changing environment completely","Unrelated practice","Reducing participation"],correct:0,exp:"It simplifies but keeps tactical integrity."},
+  {q:"‘Modification by exaggeration’ example is:",a:["Reducing goal size to focus on accuracy","Using heavier ball","Changing to different sport","Removing defenders"],correct:0,exp:"Smaller goal exaggerates precision."},
+  {q:"Why design small-sided games?",a:["Increase participation and touches","Reduce involvement","Add complexity","Lower engagement"],correct:0,exp:"Smaller sides improve engagement and learning."},
+  {q:"Pedagogical principle ensuring relevance to learners:",a:["Sampling","Overload","Repetition","Isolation"],correct:0,exp:"Sampling connects to prior experience."},
+  {q:"When teaching positioning using sampling, tennis can connect with:",a:["Badminton or pickleball","Basketball","Cricket","Rugby"],correct:0,exp:"They share similar net-barrier tactics."},
+  {q:"Representation allows teachers to:",a:["Scale games appropriately","Ignore rules","Overcomplicate games","Reduce fun"],correct:0,exp:"It makes learning developmentally suitable."},
+  {q:"When emphasizing attacking quickly, exaggeration could involve:",a:["Time limit to score","No time limit","Unlimited players","Larger field"],correct:0,exp:"Time limits exaggerate speed of attack."}
+];
+
+// Shuffle questions
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+shuffle(questions);
+
+let current = 0;
+let score = 0;
+
+const quizDiv = document.getElementById("quiz");
+const resultDiv = document.getElementById("result");
+const progressBar = document.getElementById("progress-bar");
+
+function showQuestion() {
+  progressBar.style.width = ((current / questions.length) * 100) + "%";
+  if (current >= questions.length) {
+    showResult();
+    return;
+  }
+
+  const q = questions[current];
+  quizDiv.innerHTML = `
+    <div class='question-box'>
+      <h2>Question ${current + 1} of ${questions.length}</h2>
+      <p>${q.q}</p>
+      ${q.a.map((opt, i) => `<div class='option' onclick='checkAnswer(${i})'>${opt}</div>`).join('')}
+      <div id='feedback' class='feedback'></div>
+    </div>
+  `;
+}
+
+function checkAnswer(index) {
+  const q = questions[current];
+  const options = document.querySelectorAll('.option');
+  options.forEach(opt => opt.style.pointerEvents = 'none');
+  if (index === q.correct) {
+    options[index].classList.add('correct');
+    document.getElementById('feedback').innerHTML = `✅ Correct! ${q.exp}`;
+    score++;
+  } else {
+    options[index].classList.add('incorrect');
+    options[q.correct].classList.add('correct');
+    document.getElementById('feedback').innerHTML = `❌ Incorrect. ${q.exp}`;
+  }
+  quizDiv.innerHTML += `<button onclick='nextQuestion()'>Next</button>`;
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+}
+
+function showResult() {
+  const percent = Math.round((score / questions.length) * 100);
+  quizDiv.style.display = 'none';
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = `
+    <div class='result-box'>
+      <h2>Quiz Completed!</h2>
+      <p>Your Score: ${score} / ${questions.length} (${percent}%)</p>
+      <button onclick='restartQuiz()'>Restart Quiz</button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  shuffle(questions);
+  current = 0;
+  score = 0;
+  quizDiv.style.display = 'block';
+  resultDiv.style.display = 'none';
+  showQuestion();
+}
+
+showQuestion();
+</script>
+</body>
+</html>
